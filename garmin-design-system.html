@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Garmin Connect — Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* ── BRAND COLORS ── */
+    --navy-900:   #0d1117;
+    --navy-800:   #111822;
+    --navy-700:   #161e2e;
+    --navy-600:   #1c2435;
+
+    --glass-01:   rgba(255,255,255,0.04);
+    --glass-02:   rgba(255,255,255,0.07);
+    --glass-03:   rgba(255,255,255,0.11);
+    --border-01:  rgba(255,255,255,0.07);
+    --border-02:  rgba(255,255,255,0.12);
+
+    --text-100:   #e8eaf0;
+    --text-60:    rgba(220,228,245,0.6);
+    --text-35:    rgba(200,215,240,0.35);
+    --text-20:    rgba(200,215,240,0.2);
+
+    --accent:     #c8d8f0;
+
+    --green:      #3ddc68;
+    --green-10:   rgba(61,220,104,0.10);
+    --green-20:   rgba(61,220,104,0.20);
+
+    --blue:       #4a9eff;
+    --blue-10:    rgba(74,158,255,0.10);
+    --blue-20:    rgba(74,158,255,0.20);
+
+    --orange:     #ffb44a;
+    --orange-10:  rgba(255,180,74,0.10);
+
+    --purple:     #b464ff;
+    --purple-10:  rgba(180,100,255,0.10);
+
+    /* ── TYPE ── */
+    --sans: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+
+    /* ── RADII ── */
+    --r-sm:   12px;
+    --r-md:   18px;
+    --r-lg:   24px;
+    --r-xl:   32px;
+    --r-full: 999px;
+
+    /* ── SPACING ── */
+    --sp-2:  2px;  --sp-4:  4px;  --sp-6:  6px;  --sp-8:  8px;
+    --sp-10: 10px; --sp-12: 12px; --sp-14: 14px; --sp-16: 16px;
+    --sp-20: 20px; --sp-24: 24px; --sp-28: 28px; --sp-32: 32px;
+    --sp-40: 40px; --sp-48: 48px;
+  }
+
+  html, body {
+    background: var(--navy-900);
+    font-family: var(--sans);
+    color: var(--text-100);
+    line-height: 1.6;
+  }
+
+  /* ── PAGE LAYOUT ── */
+  .page { max-width: 960px; margin: 0 auto; padding: 60px 40px 120px; }
+
+  /* ── DOC HEADER ── */
+  .doc-header {
+    border-bottom: 1px solid var(--border-01);
+    padding-bottom: 40px;
+    margin-bottom: 60px;
+  }
+
+  .doc-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 12px;
+  }
+
+  .doc-title {
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text-100);
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .doc-subtitle {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--text-60);
+    max-width: 520px;
+  }
+
+  .doc-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  .meta-pill {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-35);
+    background: var(--glass-01);
+    border: 1px solid var(--border-01);
+    border-radius: var(--r-full);
+    padding: 5px 12px;
+  }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 64px; }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-35);
+    margin-bottom: 6px;
+  }
+
+  .section-title {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-100);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-01);
+  }
+
+  /* ── GRID ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+
+  /* ── TOKEN CARD ── */
+  .token-card {
+    background: var(--glass-01);
+    border: 1px solid var(--border-01);
+    border-radius: var(--r-md);
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .token-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  }
+
+  .token-name {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-35);
+    margin-bottom: 4px;
+  }
+
+  .token-value {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-60);
+  }
+
+  /* ── COLOR SWATCH ── */
+  .swatch-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px; }
+  .swatch-row  { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .swatch {
+    border-radius: var(--r-sm);
+    border: 1px solid var(--border-01);
+    overflow: hidden;
+  }
+
+  .swatch-color { height: 52px; }
+  .swatch-info  { padding: 8px 10px; background: var(--glass-01); }
+  .swatch-label { font-family: var(--mono); font-size: 10px; color: var(--text-60); display: block; }
+  .swatch-hex   { font-family: var(--mono); font-size: 10px; color: var(--text-35); }
+
+  /* ── TYPOGRAPHY SPECIMENS ── */
+  .type-specimen {
+    background: var(--glass-01);
+    border: 1px solid var(--border-01);
+    border-radius: var(--r-md);
+    padding: 20px 24px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .type-specimen-text { flex: 1; }
+  .type-meta { text-align: right; flex-shrink: 0; }
+  .type-meta .size   { font-family: var(--mono); font-size: 11px; color: var(--blue); display: block; }
+  .type-meta .weight { font-family: var(--mono); font-size: 10px; color: var(--text-35); }
+
+  /* ── COMPONENT SHOWCASE ── */
+  .component-frame {
+    background: radial-gradient(ellipse at 30% 0%, #151e2e 0%, var(--navy-900) 70%);
+    border: 1px solid var(--border-01);
+    border-radius: var(--r-lg);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .component-frame::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(74,158,255,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .component-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-35);
+    margin-bottom: 16px;
+  }
+
+  /* ── GLASS CARD (reused from app) ── */
+  .glass-card {
+    background: var(--glass-01);
+    border-radius: var(--r-lg);
+    border: 1px solid var(--border-01);
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    pointer-events: none;
+  }
+
+  /* ── WORKOUT CARD COMPONENT ── */
+  .workout-card { padding: 20px 22px; }
+
+  .wc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+
+  .activity-pill { display: flex; align-items: center; gap: 8px; }
+
+  .icon-wrap {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .activity-type {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--green);
+  }
+
+  .badge {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.07em;
+    text-transform: uppercase; color: var(--text-35);
+    background: var(--glass-01); border: 1px solid var(--border-01);
+    border-radius: var(--r-full); padding: 3px 10px;
+  }
+
+  .wc-title {
+    font-size: 18px; font-weight: 700; letter-spacing: -0.02em;
+    line-height: 1.2; color: var(--text-100); margin-bottom: 18px;
+  }
+
+  .stats-row { display: flex; border-top: 1px solid var(--border-01); padding-top: 14px; }
+  .stat { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+  .stat + .stat { border-left: 1px solid var(--border-01); padding-left: 16px; margin-left: 16px; }
+  .stat-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-20); }
+  .stat-value { font-size: 20px; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; line-height: 1; }
+  .stat-value .unit { font-size: 11px; font-weight: 400; color: var(--text-60); margin-left: 2px; }
+  .stat-value.small { font-size: 14px; font-weight: 500; color: var(--text-60); }
+
+  /* ── GLANCE CARDS ── */
+  .glance-row { display: flex; gap: 10px; }
+
+  .glance-card {
+    flex: 1; padding: 14px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  .glance-icon {
+    width: 28px; height: 28px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border-02);
+  }
+
+  .glance-val { font-size: 22px; font-weight: 600; letter-spacing: -0.03em; color: var(--accent); line-height: 1; }
+  .glance-val .unit { font-size: 12px; font-weight: 400; color: var(--text-60); }
+  .glance-lbl { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-35); }
+
+  /* ── ICON BTN ── */
+  .icon-btn-demo {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--glass-01); border: 1px solid var(--border-01);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .btn-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+  /* ── BOTTOM NAV PREVIEW ── */
+  .nav-preview {
+    background: rgba(13,17,23,0.9);
+    backdrop-filter: blur(24px);
+    border-top: 1px solid var(--border-01);
+    border-radius: 0 0 var(--r-lg) var(--r-lg);
+    display: flex;
+    padding: 12px 0 8px;
+  }
+
+  .nav-item {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; gap: 5px; cursor: pointer; padding: 4px 0;
+  }
+
+  .nav-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-20); }
+  .nav-item.active .nav-label { color: var(--green); }
+
+  /* ── SPACING TOKENS ── */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+
+  .sp-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .sp-bar { background: var(--blue-10); border: 1px solid var(--blue-20); border-radius: 4px; width: 24px; }
+  .sp-label { font-family: var(--mono); font-size: 9px; color: var(--text-35); }
+
+  /* ── BORDER RADIUS TOKENS ── */
+  .radius-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .r-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .r-box { width: 52px; height: 52px; background: var(--glass-02); border: 1px solid var(--border-02); }
+  .r-lbl { font-family: var(--mono); font-size: 9px; color: var(--text-35); text-align: center; }
+
+  /* ── EFFECT TOKENS ── */
+  .effect-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .effect-card {
+    background: var(--glass-01); border: 1px solid var(--border-01);
+    border-radius: var(--r-md); padding: 20px; min-height: 80px;
+    display: flex; flex-direction: column; justify-content: flex-end; gap: 6px;
+  }
+  .effect-name { font-family: var(--mono); font-size: 10px; color: var(--text-60); letter-spacing: 0.08em; }
+  .effect-val  { font-family: var(--mono); font-size: 10px; color: var(--text-35); }
+
+  /* ── DIVIDER ── */
+  hr { border: none; border-top: 1px solid var(--border-01); margin: 40px 0; }
+
+  /* ── ANNOTATION ── */
+  .annotation {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em;
+    color: var(--text-35); margin-top: 10px;
+  }
+
+  .annotation strong { color: var(--text-60); }
+
+  /* ── STATES TABLE ── */
+  .states-row { display: flex; gap: 12px; }
+
+  .state-item { flex: 1; }
+
+  .state-label {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text-35); margin-bottom: 8px; text-align: center;
+  }
+
+  .state-card {
+    background: var(--glass-01); border: 1px solid var(--border-01);
+    border-radius: var(--r-md); padding: 14px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+
+  .state-card.hover { background: var(--glass-02); border-color: var(--border-02); }
+  .state-card.active-state { background: var(--glass-03); border-color: rgba(255,255,255,0.18); transform: translateY(-1px); }
+  .state-card.disabled { opacity: 0.35; }
+
+  .state-card::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  }
+
+  .state-title { font-size: 14px; font-weight: 600; color: var(--text-100); margin-bottom: 4px; }
+  .state-sub   { font-family: var(--mono); font-size: 10px; color: var(--text-35); }
+
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── DOC HEADER ── -->
+  <div class="doc-header">
+    <p class="doc-eyebrow">Design System · v1.0</p>
+    <h1 class="doc-title">Garmin Connect<br>Glass UI</h1>
+    <p class="doc-subtitle">A glassmorphism-first design language for the Garmin Connect mobile app. Dark navy surfaces, translucent card layers, and precise typographic hierarchy.</p>
+    <div class="doc-meta">
+      <span class="meta-pill">Mobile · iOS & Android</span>
+      <span class="meta-pill">DM Sans · DM Mono</span>
+      <span class="meta-pill">March 2026</span>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       1. COLOR TOKENS
+  ══════════════════════════════════ -->
+  <div class="section">
+    <p class="section-label">01</p>
+    <h2 class="section-title">Color Tokens</h2>
+
+    <p style="font-size:13px;color:var(--text-60);margin-bottom:20px;font-family:var(--mono);letter-spacing:0.04em;">BACKGROUND SCALE</p>
+    <div class="swatch-grid" style="grid-template-columns:repeat(4,1fr);">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#0d1117"></div>
+        <div class="swatch-info"><span class="swatch-label">navy-900</span><span class="swatch-hex">#0d1117</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#111822"></div>
+        <div class="swatch-info"><span class="swatch-label">navy-800</span><span class="swatch-hex">#111822</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#161e2e"></div>
+        <div class="swatch-info"><span class="swatch-label">navy-700</span><span class="swatch-hex">#161e2e</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1c2435"></div>
+        <div class="swatch-info"><span class="swatch-label">navy-600</span><span class="swatch-hex">#1c2435</span></div>
+      </div>
+    </div>
+
+    <p style="font-size:13px;color:var(--text-60);margin-bottom:20px;margin-top:28px;font-family:var(--mono);letter-spacing:0.04em;">GLASS SURFACES</p>
+    <div class="swatch-grid" style="grid-template-columns:repeat(3,1fr);">
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(255,255,255,0.04);border-bottom:1px solid var(--border-01)"></div>
+        <div class="swatch-info"><span class="swatch-label">glass-01</span><span class="swatch-hex">rgba(255,255,255,0.04)</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(255,255,255,0.07);border-bottom:1px solid var(--border-01)"></div>
+        <div class="swatch-info"><span class="swatch-label">glass-02</span><span class="swatch-hex">rgba(255,255,255,0.07)</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(255,255,255,0.11);border-bottom:1px solid var(--border-01)"></div>
+        <div class="swatch-info"><span class="swatch-label">glass-03</span><span class="swatch-hex">rgba(255,255,255,0.11)</span></div>
+      </div>
+    </div>
+
+    <p style="font-size:13px;color:var(--text-60);margin-bottom:20px;margin-top:28px;font-family:var(--mono);letter-spacing:0.04em;">TEXT SCALE</p>
+    <div class="swatch-grid" style="grid-template-columns:repeat(4,1fr);">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#e8eaf0"></div>
+        <div class="swatch-info"><span class="swatch-label">text-100</span><span class="swatch-hex">#e8eaf0</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(220,228,245,0.6)"></div>
+        <div class="swatch-info"><span class="swatch-label">text-60</span><span class="swatch-hex">rgba(220,228,245,0.6)</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(200,215,240,0.35)"></div>
+        <div class="swatch-info"><span class="swatch-label">text-35</span><span class="swatch-hex">rgba(200,215,240,0.35)</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(200,215,240,0.2)"></div>
+        <div class="swatch-info"><span class="swatch-label">text-20</span><span class="swatch-hex">rgba(200,215,240,0.2)</span></div>
+      </div>
+    </div>
+
+    <p style="font-size:13px;color:var(--text-60);margin-bottom:20px;margin-top:28px;font-family:var(--mono);letter-spacing:0.04em;">ACCENT COLORS — SEMANTIC</p>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#3ddc68"></div>
+        <div class="swatch-info"><span class="swatch-label">green · activity</span><span class="swatch-hex">#3ddc68</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(61,220,104,0.10)"></div>
+        <div class="swatch-info"><span class="swatch-label">green-10</span><span class="swatch-hex">rgba(61,220,104,0.10)</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#4a9eff"></div>
+        <div class="swatch-info"><span class="swatch-label">blue · focus</span><span class="swatch-hex">#4a9eff</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:rgba(74,158,255,0.10)"></div>
+        <div class="swatch-info"><span class="swatch-label">blue-10</span><span class="swatch-hex">rgba(74,158,255,0.10)</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ffb44a"></div>
+        <div class="swatch-info"><span class="swatch-label">orange · sleep</span><span class="swatch-hex">#ffb44a</span></div>
+      </div>
+    </div>
+    <div class="swatch-grid" style="grid-template-columns:repeat(3,1fr);margin-top:-4px;">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#b464ff"></div>
+        <div class="swatch-info"><span class="swatch-label">purple · wellness</span><span class="swatch-hex">#b464ff</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#c8d8f0"></div>
+        <div class="swatch-info"><span class="swatch-label">accent · hero text</span><span class="swatch-hex">#c8d8f0</span></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       2. TYPOGRAPHY
+  ══════════════════════════════════ -->
+  <div class="section">
+    <p class="section-label">02</p>
+    <h2 class="section-title">Typography</h2>
+
+    <div class="token-card" style="margin-bottom:20px;">
+      <div class="token-name">Font Families</div>
+      <div style="display:flex;gap:32px;margin-top:10px;">
+        <div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:22px;font-weight:700;color:var(--text-100);letter-spacing:-0.02em;">DM Sans</div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--text-35);margin-top:4px;">Display · Body · UI Labels</div>
+        </div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:22px;color:var(--text-100);">DM Mono</div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--text-35);margin-top:4px;">Tags · Values · Meta · Timestamps</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="type-specimen">
+      <div class="type-specimen-text">
+        <div style="font-size:52px;font-weight:300;letter-spacing:-0.04em;color:var(--accent);line-height:1;">2:51:00</div>
+      </div>
+      <div class="type-meta">
+        <span class="size">52px</span>
+        <span class="weight">Weight 300 · Light</span>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--text-20);margin-top:4px;">Hero Metric</div>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-specimen-text">
+        <div style="font-size:32px;font-weight:700;letter-spacing:-0.03em;color:var(--text-100);line-height:1;">Today's Activity</div>
+      </div>
+      <div class="type-meta">
+        <span class="size">32px</span>
+        <span class="weight">Weight 700 · Bold</span>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--text-20);margin-top:4px;">Page Title</div>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-specimen-text">
+        <div style="font-size:20px;font-weight:700;letter-spacing:-0.02em;color:var(--text-100);line-height:1.2;">W15 — Endurance Ride with Tempo Intervals</div>
+      </div>
+      <div class="type-meta">
+        <span class="size">20px</span>
+        <span class="weight">Weight 700</span>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--text-20);margin-top:4px;">Card Title</div>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-specimen-text">
+        <div style="font-size:17px;font-weight:600;color:var(--text-100);">Section heading</div>
+      </div>
+      <div class="type-meta">
+        <span class="size">17px</span>
+        <span class="weight">Weight 600</span>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--text-20);margin-top:4px;">Section Title</div>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-specimen-text">
+        <div style="font-size:22px;font-weight:700;letter-spacing:-0.02em;color:var(--accent);">72 <span style="font-size:13px;color:var(--text-60);font-weight:400;">bpm</span></div>
+      </div>
+      <div class="type-meta">
+        <span class="size">22px / 13px</span>
+        <span class="weight">700 + 400</span>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--text-20);margin-top:4px;">Metric + Unit</div>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-specimen-text">
+        <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);">Cycling</div>
+      </div>
+      <div class="type-meta">
+        <span class="size">11px</span>
+        <span class="weight">DM Mono · 400</span>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--text-20);margin-top:4px;">Activity Tag</div>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-specimen-text">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-20);">DURATION</div>
+      </div>
+      <div class="type-meta">
+        <span class="size">9px</span>
+        <span class="weight">DM Mono · 400</span>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--text-20);margin-top:4px;">Stat Label</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       3. SPACING & RADIUS
+  ══════════════════════════════════ -->
+  <div class="section">
+    <p class="section-label">03</p>
+    <h2 class="section-title">Spacing & Border Radius</h2>
+
+    <p style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-35);margin-bottom:16px;">4pt base grid</p>
+
+    <div style="background:var(--glass-01);border:1px solid var(--border-01);border-radius:var(--r-md);padding:24px;margin-bottom:24px;">
+      <div class="spacing-row">
+        <div class="sp-item"><div class="sp-bar" style="height:4px"></div><div class="sp-label">2</div></div>
+        <div class="sp-item"><div class="sp-bar" style="height:8px"></div><div class="sp-label">4</div></div>
+        <div class="sp-item"><div class="sp-bar" style="height:12px"></div><div class="sp-label">6</div></div>
+        <div class="sp-item"><div class="sp-bar" style="height:16px"></div><div class="sp-label">8</div></div>
+        <div class="sp-item"><div class="sp-bar" style="height:20px"></div><div class="sp-label">10</div></div>
+        <div class="sp-item"><div class="sp-bar" style="height:24px"></div><div class="sp-label">12</div></div>
+        <div class="sp-item"><div class="sp-bar" style="height:28px"></div><div class="sp-label">14</div></div>
+        <div class="sp-item"><div class="sp-bar" style="height:32px"></div><div class="sp-label">16</div></div>
+        <div class="sp-item"><div class="sp-bar" style="height:40px"></div><div class="sp-label">20</div></div>
+        <div class="sp-item"><div class="sp-bar" style="height:48px"></div><div class="sp-label">24</div></div>
+        <div class="sp-item"><div class="sp-bar" style="height:56px"></div><div class="sp-label">28</div></div>
+        <div class="sp-item"><div class="sp-bar" style="height:64px"></div><div class="sp-label">32</div></div>
+        <div class="sp-item"><div class="sp-bar" style="height:80px"></div><div class="sp-label">40</div></div>
+        <div class="sp-item"><div class="sp-bar" style="height:96px"></div><div class="sp-label">48</div></div>
+      </div>
+    </div>
+
+    <p style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-35);margin-bottom:16px;">Border Radius Tokens</p>
+
+    <div style="background:var(--glass-01);border:1px solid var(--border-01);border-radius:var(--r-md);padding:24px;">
+      <div class="radius-row">
+        <div class="r-item">
+          <div class="r-box" style="border-radius:8px;"></div>
+          <div class="r-lbl">r-sm<br>8px</div>
+        </div>
+        <div class="r-item">
+          <div class="r-box" style="border-radius:12px;"></div>
+          <div class="r-lbl">r-sm+<br>12px</div>
+        </div>
+        <div class="r-item">
+          <div class="r-box" style="border-radius:18px;"></div>
+          <div class="r-lbl">r-md<br>18px</div>
+        </div>
+        <div class="r-item">
+          <div class="r-box" style="border-radius:24px;"></div>
+          <div class="r-lbl">r-lg<br>24px</div>
+        </div>
+        <div class="r-item">
+          <div class="r-box" style="border-radius:32px;"></div>
+          <div class="r-lbl">r-xl<br>32px</div>
+        </div>
+        <div class="r-item">
+          <div class="r-box" style="border-radius:50px;"></div>
+          <div class="r-lbl">r-full<br>999px</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       4. ELEVATION & EFFECTS
+  ══════════════════════════════════ -->
+  <div class="section">
+    <p class="section-label">04</p>
+    <h2 class="section-title">Elevation & Effects</h2>
+
+    <div class="effect-grid">
+      <div class="effect-card" style="background:var(--glass-01);">
+        <div class="effect-name">Glass 01 — Card Default</div>
+        <div class="effect-val">fill: rgba(255,255,255,0.04)<br>border: rgba(255,255,255,0.07)<br>blur: 20px</div>
+      </div>
+      <div class="effect-card" style="background:var(--glass-02);">
+        <div class="effect-name">Glass 02 — Card Hover</div>
+        <div class="effect-val">fill: rgba(255,255,255,0.07)<br>border: rgba(255,255,255,0.12)<br>blur: 20px</div>
+      </div>
+      <div class="effect-card" style="background:var(--glass-03);">
+        <div class="effect-name">Glass 03 — Card Active</div>
+        <div class="effect-val">fill: rgba(255,255,255,0.11)<br>border: rgba(255,255,255,0.18)<br>blur: 20px</div>
+      </div>
+      <div class="effect-card" style="box-shadow:0 0 0 1px rgba(255,255,255,0.03),0 8px 24px rgba(0,0,0,0.4);">
+        <div class="effect-name">Shadow — Lift</div>
+        <div class="effect-val">0 8px 24px rgba(0,0,0,0.4)<br>+ 1px border inset</div>
+      </div>
+      <div class="effect-card" style="position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);"></div>
+        <div class="effect-name">Top Edge Highlight</div>
+        <div class="effect-val">gradient: transparent → rgba(255,255,255,0.12) → transparent<br>h: 1px</div>
+      </div>
+      <div class="effect-card" style="position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:120px;height:120px;background:radial-gradient(circle,rgba(74,158,255,0.1) 0%,transparent 70%);"></div>
+        <div class="effect-name">Radial Glow</div>
+        <div class="effect-val">radial-gradient ellipse<br>rgba(74,158,255,0.07–0.12)<br>top-center of screen</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       5. COMPONENTS
+  ══════════════════════════════════ -->
+  <div class="section">
+    <p class="section-label">05</p>
+    <h2 class="section-title">Components</h2>
+
+    <!-- 5a. Workout Card -->
+    <p style="font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-35);margin-bottom:12px;">Workout Card</p>
+    <div class="component-frame" style="margin-bottom:10px;">
+      <div class="glass-card workout-card">
+        <div class="wc-top">
+          <div class="activity-pill">
+            <div class="icon-wrap" style="background:var(--green-10);border:1px solid var(--green-20);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="5" r="2" fill="#3ddc68"/>
+                <path d="M8 17h8" stroke="#3ddc68" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="8" cy="19" r="2" stroke="#3ddc68" stroke-width="1.5" fill="none"/>
+                <circle cx="16" cy="19" r="2" stroke="#3ddc68" stroke-width="1.5" fill="none"/>
+                <path d="M10 12l2-4 2 4-2 1-2-1z" fill="#3ddc68"/>
+              </svg>
+            </div>
+            <span class="activity-type">Cycling</span>
+          </div>
+          <span class="badge">Scheduled</span>
+        </div>
+        <p class="wc-title">W15 — Endurance Ride with Tempo Intervals</p>
+        <div class="stats-row">
+          <div class="stat">
+            <span class="stat-label">Duration</span>
+            <span class="stat-value">1:35 <span class="unit">hr</span></span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Type</span>
+            <span class="stat-value small">Workout</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="annotation"><strong>Anatomy:</strong> activity pill (icon + mono label) · scheduled badge · card title 700 · divider · stat pairs with mono labels</p>
+
+    <hr>
+
+    <!-- 5b. Glance Cards -->
+    <p style="font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-35);margin-bottom:12px;margin-top:32px;">At a Glance Cards</p>
+    <div class="component-frame" style="margin-bottom:10px;">
+      <div class="glance-row">
+        <div class="glass-card glance-card">
+          <div class="glance-icon" style="background:var(--green-10);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3ddc68" stroke-width="1.8" stroke-linecap="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <div class="glance-val">72 <span class="unit">bpm</span></div>
+          <div class="glance-lbl">Heart Rate</div>
+        </div>
+        <div class="glass-card glance-card">
+          <div class="glance-icon" style="background:var(--blue-10);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4a9eff" stroke-width="1.8" stroke-linecap="round">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+          </div>
+          <div class="glance-val">847</div>
+          <div class="glance-lbl">Steps</div>
+        </div>
+        <div class="glass-card glance-card">
+          <div class="glance-icon" style="background:var(--orange-10);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffb44a" stroke-width="1.8" stroke-linecap="round">
+              <circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/>
+            </svg>
+          </div>
+          <div class="glance-val">7.2 <span class="unit">h</span></div>
+          <div class="glance-lbl">Sleep</div>
+        </div>
+        <div class="glass-card glance-card">
+          <div class="glance-icon" style="background:var(--purple-10);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b464ff" stroke-width="1.8" stroke-linecap="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </div>
+          <div class="glance-val">68</div>
+          <div class="glance-lbl">Body Battery</div>
+        </div>
+      </div>
+    </div>
+    <p class="annotation"><strong>Color coding:</strong> Green = activity/heart · Blue = energy/steps · Orange = sleep/recovery · Purple = wellness</p>
+
+    <hr>
+
+    <!-- 5c. Icon Buttons -->
+    <p style="font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-35);margin-bottom:12px;margin-top:32px;">Icon Buttons & Badges</p>
+    <div class="component-frame">
+      <div class="btn-row">
+        <div class="icon-btn-demo">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(200,210,230,0.6)" stroke-width="1.8" stroke-linecap="round">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+        </div>
+        <div class="icon-btn-demo">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(200,210,230,0.6)" stroke-width="1.8" stroke-linecap="round">
+            <polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.07-9.5"/>
+          </svg>
+        </div>
+        <div class="icon-btn-demo" style="position:relative;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(200,210,230,0.6)" stroke-width="1.8" stroke-linecap="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+          <div style="position:absolute;top:3px;right:3px;width:7px;height:7px;background:#4a9eff;border-radius:50%;border:1.5px solid #0d1117;"></div>
+        </div>
+        <div style="margin-left:8px;display:flex;gap:8px;align-items:center;">
+          <span class="badge">Scheduled</span>
+          <span style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(61,220,104,0.85);background:rgba(61,220,104,0.1);border:1px solid rgba(61,220,104,0.2);border-radius:999px;padding:3px 10px;">Cycling</span>
+          <span style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(74,158,255,0.85);background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.2);border-radius:999px;padding:3px 10px;">All Activities</span>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- 5d. Interactive States -->
+    <p style="font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-35);margin-bottom:12px;margin-top:32px;">Interactive States</p>
+    <div class="states-row">
+      <div class="state-item">
+        <div class="state-label">Default</div>
+        <div class="state-card">
+          <div class="state-title">Card</div>
+          <div class="state-sub">glass-01 · border-01</div>
+        </div>
+      </div>
+      <div class="state-item">
+        <div class="state-label">Hover</div>
+        <div class="state-card hover">
+          <div class="state-title">Card</div>
+          <div class="state-sub">glass-02 · border-02</div>
+        </div>
+      </div>
+      <div class="state-item">
+        <div class="state-label">Active / Press</div>
+        <div class="state-card active-state">
+          <div class="state-title">Card</div>
+          <div class="state-sub">glass-03 · translateY(-1px)</div>
+        </div>
+      </div>
+      <div class="state-item">
+        <div class="state-label">Disabled</div>
+        <div class="state-card disabled">
+          <div class="state-title">Card</div>
+          <div class="state-sub">opacity: 0.35</div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- 5e. Bottom Nav -->
+    <p style="font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-35);margin-bottom:12px;margin-top:32px;">Bottom Navigation</p>
+    <div class="component-frame" style="padding:0;">
+      <div class="nav-preview">
+        <div class="nav-item active">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(61,220,104,0.85)" stroke-width="1.7" stroke-linecap="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span class="nav-label" style="color:var(--green);">Home</span>
+        </div>
+        <div class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(200,215,240,0.2)" stroke-width="1.7" stroke-linecap="round">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+          <span class="nav-label">Challenges</span>
+        </div>
+        <div class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(200,215,240,0.2)" stroke-width="1.7" stroke-linecap="round">
+            <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          <span class="nav-label">Calendar</span>
+        </div>
+        <div class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(200,215,240,0.2)" stroke-width="1.7" stroke-linecap="round">
+            <path d="M4 4h16v16H4z" rx="2"/><line x1="4" y1="9" x2="20" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>
+          </svg>
+          <span class="nav-label">News Feed</span>
+        </div>
+        <div class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="5" cy="12" r="1.5" fill="rgba(200,215,240,0.2)"/>
+            <circle cx="12" cy="12" r="1.5" fill="rgba(200,215,240,0.2)"/>
+            <circle cx="19" cy="12" r="1.5" fill="rgba(200,215,240,0.2)"/>
+          </svg>
+          <span class="nav-label">More</span>
+        </div>
+      </div>
+    </div>
+    <p class="annotation" style="margin-top:10px;"><strong>Active state:</strong> green icon + green label · <strong>Inactive:</strong> text-20 icon + text-20 label · blur backdrop 24px</p>
+
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       6. MOTION
+  ══════════════════════════════════ -->
+  <div class="section">
+    <p class="section-label">06</p>
+    <h2 class="section-title">Motion & Animation</h2>
+
+    <div class="grid-2">
+      <div class="token-card">
+        <div class="token-name">Page Load — Stagger Reveal</div>
+        <div style="margin-top:10px;">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--accent);line-height:1.8;">
+            animation: fadeUp 0.5s ease<br>
+            from: opacity 0 + translateY(14px)<br>
+            to: opacity 1 + translateY(0)
+          </div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--text-35);margin-top:8px;">
+            Nav: delay 0.05s<br>
+            Card 1: delay 0.15s<br>
+            Card 2: delay 0.25s<br>
+            Glance: delay 0.35s
+          </div>
+        </div>
+      </div>
+      <div class="token-card">
+        <div class="token-name">Card Hover / Press</div>
+        <div style="margin-top:10px;">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--accent);line-height:1.8;">
+            transition: transform 0.2s ease<br>
+            hover: translateY(-2px)<br>
+            active: translateY(0px)<br>
+            bg: glass-01 → glass-02
+          </div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--text-35);margin-top:8px;">
+            Subtle lift — never scale<br>
+            No bounce or spring
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       7. DESIGN PRINCIPLES
+  ══════════════════════════════════ -->
+  <div class="section">
+    <p class="section-label">07</p>
+    <h2 class="section-title">Design Principles</h2>
+
+    <div class="grid-3">
+      <div class="token-card">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;">Glass Over Solid</div>
+        <div style="font-size:13px;color:var(--text-60);line-height:1.6;">Cards are never opaque. Every surface is translucent, referencing the navy depth beneath.</div>
+      </div>
+      <div class="token-card">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:8px;">Metric-First</div>
+        <div style="font-size:13px;color:var(--text-60);line-height:1.6;">The largest, highest-contrast element on any card is always the primary data value. Labels follow.</div>
+      </div>
+      <div class="token-card">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--orange);margin-bottom:8px;">Semantic Color</div>
+        <div style="font-size:13px;color:var(--text-60);line-height:1.6;">Each metric domain has a dedicated color. Never mix colors within a single metric category.</div>
+      </div>
+      <div class="token-card">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple);margin-bottom:8px;">Mono for Meta</div>
+        <div style="font-size:13px;color:var(--text-60);line-height:1.6;">DM Mono is reserved for labels, timestamps, tags, and technical values. DM Sans carries all primary content.</div>
+      </div>
+      <div class="token-card">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Light Weight Hero</div>
+        <div style="font-size:13px;color:var(--text-60);line-height:1.6;">Hero metrics (timers, big totals) use font-weight 300 to feel effortless. Titles use 700 for contrast.</div>
+      </div>
+      <div class="token-card">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-60);margin-bottom:8px;">Restrained Motion</div>
+        <div style="font-size:13px;color:var(--text-60);line-height:1.6;">Animations are subtle — 0.2–0.5s ease, translate only. No bounce, no scale, no dramatic transitions.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
